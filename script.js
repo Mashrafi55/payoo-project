@@ -6,10 +6,10 @@ document.getElementById("loginButton").addEventListener("click", function (e) {
   const pinNumber = 1234;
 
   const mobileNumberValue = document.getElementById("mobile-number").value;
-  const mobileNumberValueConverted = parseInt(mobileNumberValue);
+  const mobileNumberValueConverted = Number(mobileNumberValue);
 
   const pinNumberValue = document.getElementById("pin-number").value;
-  const pinNumberValueConverted = parseInt(pinNumberValue);
+  const pinNumberValueConverted = Number(pinNumberValue);
 
   const alertContainer = document.getElementById("alert-container");
 
