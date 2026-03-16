@@ -45,6 +45,22 @@ function handleToggle(id) {
   document.getElementById(id).style.display = "block";
 }
 
+// resuable funciton to toggle button style
+
+function handleBtnToggle(id) {
+  const formBtns = document.getElementsByClassName("form-btn");
+
+  for (const btn of formBtns) {
+    btn.classList.remove("border-[#0874F2]", "bg-[#0874f20d]");
+    btn.classList.add("border-[#0808081a]");
+  }
+
+  document.getElementById(id).classList.remove("border-[#0808081a]");
+
+  document
+    .getElementById(id)
+    .classList.add("border-[#0874F2]", "bg-[#0874f20d]");
+}
 // add money feature
 document
   .getElementById("add-money-btn")
@@ -114,7 +130,10 @@ document.getElementById("withdraw-btn").addEventListener("click", function (e) {
 
 // Add money
 document.getElementById("add-button").addEventListener("click", function () {
+  // toggle
   handleToggle("add-money-parent");
+  // button style
+  handleBtnToggle("add-button");
 });
 
 // Cashout
@@ -122,6 +141,9 @@ document
   .getElementById("cash-out-button")
   .addEventListener("click", function () {
     handleToggle("cash-out-parent");
+
+    // button style
+    handleBtnToggle("cash-out-button");
   });
 
 // Transfer money
@@ -129,11 +151,17 @@ document
   .getElementById("transfer-button")
   .addEventListener("click", function () {
     handleToggle("transfer-money-parent");
+
+    // button style
+    handleBtnToggle("transfer-button");
   });
 
 //   Get bonus
 document.getElementById("bonus-button").addEventListener("click", function () {
   handleToggle("get-bonus-parent");
+
+  // button style
+  handleBtnToggle("bonus-button");
 });
 
 //   Pay Bill
@@ -141,4 +169,7 @@ document
   .getElementById("pay-bill-button")
   .addEventListener("click", function () {
     handleToggle("pay-bill-parent");
+
+    // button style
+    handleBtnToggle("pay-bill-button");
   });
