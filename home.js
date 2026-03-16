@@ -126,6 +126,102 @@ document.getElementById("withdraw-btn").addEventListener("click", function (e) {
   setInnerText(totalNewBalance);
 });
 
+// transfer money feature
+document.getElementById("transfer-btn").addEventListener("click", function (e) {
+  e.preventDefault();
+
+  const userNumber = getValue("transfer-account-number");
+
+  const transferAmount = getValueNumber("transfer-amount");
+
+  const availableBalance = getInnerText("available-balance");
+
+  const transferPin = getValueNumber("transfer-pin");
+
+  if (userNumber.length !== 11) {
+    showAlert("Warning: Agent number must be 11 digits!", "transfer-alert");
+    return;
+  }
+
+  if (transferPin !== pinNumber) {
+    showAlert("Warning: Invalid pin!", "transfer-alert");
+    return;
+  }
+
+  if (transferAmount > availableBalance) {
+    showAlert("Warning: Insufficient balance!", "cashout-alert");
+    return;
+  }
+
+  const totalNewBalance = availableBalance - transferAmount;
+
+  setInnerText(totalNewBalance);
+});
+
+// get bonus
+
+let couponUsed = false;
+
+document.getElementById("bonus-btn").addEventListener("click", function (e) {
+  e.preventDefault();
+
+  const bonus = 1000;
+  const bonusCoupon = getValue("bonus");
+
+  const availableBalance = getInnerText("available-balance");
+
+  if (couponUsed) {
+    showAlert("Warning: Coupon already used!", "bonus-alert");
+    return;
+  }
+
+  if (bonusCoupon.length !== 4 || isNaN(bonusCoupon)) {
+    showAlert("Warning: Invalid coupon!", "bonus-alert");
+    return;
+  }
+
+  const totalNewBalance = bonus + availableBalance;
+
+  setInnerText(totalNewBalance);
+
+  couponUsed = true;
+});
+
+// Pay bill
+document.getElementById("bill-btn").addEventListener("click", function (e) {
+  e.preventDefault();
+
+  const billerAccountNumber = getValue("bill-account-number");
+
+  const amountToPay = getValueNumber("bill-amount");
+
+  const availableBalance = getInnerText("available-balance");
+
+  const billPin = getValueNumber("bill-pin");
+
+  if (billerAccountNumber.length !== 11 || isNaN(billerAccountNumber)) {
+    showAlert(
+      "Warning: Biller Account number must be 11 digits!",
+      "bill-alert",
+    );
+    return;
+  }
+
+  if (billPin !== pinNumber) {
+    showAlert("Warning: Invalid pin!", "bill-alert");
+    return;
+  }
+
+  if (amountToPay > availableBalance) {
+    showAlert("Warning: Insufficient balance!", "bill-alert");
+    return;
+  }
+
+  const totalNewBalance = availableBalance - amountToPay;
+
+  setInnerText(totalNewBalance);
+});
+
 // toggling feature
 
 // Add money
