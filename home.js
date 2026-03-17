@@ -1,4 +1,5 @@
 const pinNumber = 1234;
+const transactionData = [];
 
 // reusable function for alert
 function showAlert(message, containerId) {
@@ -13,6 +14,10 @@ function showAlert(message, containerId) {
       `;
   setTimeout(() => (alertContainer.innerHTML = ""), 3000);
 }
+
+document.getElementById("log-out").addEventListener("click", function () {
+  window.location.href = "./index.html";
+});
 
 // reusable function to get value number
 function getValueNumber(value) {
@@ -73,6 +78,11 @@ document
 
     const addAmount = getValueNumber("add-amount");
 
+    if (addAmount <= 0) {
+      showAlert("Warning: Invalid amount", "add-money-alert");
+      return;
+    }
+
     const addPin = getValueNumber("add-pin");
 
     const availableBalance = getInnerText("available-balance");
@@ -93,6 +103,15 @@ document
     const totalNewBalance = addAmount + availableBalance;
 
     setInnerText(totalNewBalance);
+
+    const data = {
+      name: "Bank Deposit",
+      bank,
+      date: new Date().toLocaleTimeString(),
+    };
+
+    transactionData.push(data);
+    console.log(transactionData);
   });
 
 //   cashout money feature
@@ -116,6 +135,11 @@ document.getElementById("withdraw-btn").addEventListener("click", function (e) {
     return;
   }
 
+  if (amount <= 0) {
+    showAlert("Warning: Invalid amount !", "cashout-alert");
+    return;
+  }
+
   if (amount > availableBalance) {
     showAlert("Warning: Insufficient balance!", "cashout-alert");
     return;
@@ -124,6 +148,15 @@ document.getElementById("withdraw-btn").addEventListener("click", function (e) {
   const totalNewBalance = availableBalance - amount;
 
   setInnerText(totalNewBalance);
+
+  const data = {
+    name: "Cash Out",
+
+    date: new Date().toLocaleTimeString(),
+  };
+
+  transactionData.push(data);
+  console.log(transactionData);
 });
 
 // transfer money feature
@@ -148,14 +181,27 @@ document.getElementById("transfer-btn").addEventListener("click", function (e) {
     return;
   }
 
+  if (transferAmount <= 0) {
+    showAlert("Warning: Invalid amount !", "transfer-alert");
+    return;
+  }
+
   if (transferAmount > availableBalance) {
-    showAlert("Warning: Insufficient balance!", "cashout-alert");
+    showAlert("Warning: Insufficient balance!", "transfer-alert");
     return;
   }
 
   const totalNewBalance = availableBalance - transferAmount;
 
   setInnerText(totalNewBalance);
+
+  const data = {
+    name: "Transfer Money",
+    date: new Date().toLocaleTimeString(),
+  };
+
+  transactionData.push(data);
+  console.log(transactionData);
 });
 
 // get bonus
@@ -185,6 +231,14 @@ document.getElementById("bonus-btn").addEventListener("click", function (e) {
   setInnerText(totalNewBalance);
 
   couponUsed = true;
+
+  const data = {
+    name: "Bonus",
+    date: new Date().toLocaleTimeString(),
+  };
+
+  transactionData.push(data);
+  console.log(transactionData);
 });
 
 // Pay bill
@@ -196,6 +250,8 @@ document.getElementById("bill-btn").addEventListener("click", function (e) {
   const amountToPay = getValueNumber("bill-amount");
 
   const availableBalance = getInnerText("available-balance");
+
+  const billType = getValue("bill-type");
 
   const billPin = getValueNumber("bill-pin");
 
@@ -211,6 +267,10 @@ document.getElementById("bill-btn").addEventListener("click", function (e) {
     showAlert("Warning: Invalid pin!", "bill-alert");
     return;
   }
+  if (amountToPay <= 0) {
+    showAlert("Warning: Invalid amount!", "bill-alert");
+    return;
+  }
 
   if (amountToPay > availableBalance) {
     showAlert("Warning: Insufficient balance!", "bill-alert");
@@ -220,7 +280,48 @@ document.getElementById("bill-btn").addEventListener("click", function (e) {
   const totalNewBalance = availableBalance - amountToPay;
 
   setInnerText(totalNewBalance);
+
+  const data = {
+    name: billType,
+    date: new Date().toLocaleTimeString(),
+  };
+
+  transactionData.push(data);
+  console.log(transactionData);
 });
+
+// transactions
+
+document
+  .getElementById("transaction-button")
+  .addEventListener("click", function () {
+    const transactionContainer = document.getElementById(
+      "transaction-container",
+    );
+    transactionContainer.innerText = "";
+
+    for (const data of transactionData) {
+      const div = document.createElement("div");
+      div.innerHTML = `
+      <div
+            class="bg-white rounded-xl p-2 flex justify-between items-center mt-3"
+          >
+            <div class="flex items-center">
+              <div class="bg-[#0808080d] p-2 rounded-full">
+                <img src="assets/wallet1.png" class="mx-auto" alt="" />
+              </div>
+              <div class="ml-3">
+                <h1>${data.name}</h1>
+                <p>${data.date}</p>
+              </div>
+            </div>
+
+            <i class="fa-solid fa-ellipsis rotate-90"></i>
+          </div>
+      `;
+      transactionContainer.appendChild(div);
+    }
+  });
 
 // toggling feature
 
@@ -268,4 +369,15 @@ document
 
     // button style
     handleBtnToggle("pay-bill-button");
+  });
+
+//  transaction
+
+document
+  .getElementById("transaction-button")
+  .addEventListener("click", function () {
+    handleToggle("transactions-parent");
+
+    // button style
+    handleBtnToggle("transaction-button");
   });

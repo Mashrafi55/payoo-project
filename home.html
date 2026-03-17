@@ -38,7 +38,11 @@
           </div>
         </div>
         <div>
-          <button class="btn text-[#08080880] bg-[#08080811] font-normal">
+          <button
+            id="log-out"
+            type="button"
+            class="btn text-[#08080880] bg-[#08080811] font-normal"
+          >
             <i class="fa-solid fa-arrow-right-from-bracket rotate-180"></i>
             Log Out
           </button>
@@ -89,7 +93,10 @@
           <img src="./assets/purse1.png" alt="" class="mx-auto" />
           <h2 class="text-[#080808b3]">Pay Bill</h2>
         </div>
-        <div class="form-btn border-2 border-[#0808081a] p-3 rounded-xl">
+        <div
+          id="transaction-button"
+          class="form-btn border-2 border-[#0808081a] p-3 rounded-xl"
+        >
           <img src="./assets/transaction1.png" alt="" class="mx-auto" />
           <h2 class="text-[#080808b3]">Transactions</h2>
         </div>
@@ -305,7 +312,7 @@
               id="bill-type"
               class="select input bg-[#f4f5f7] mt-3 rounded-3xl font-light h-[48px] w-full text-[#080808b3]"
             >
-              <option disabled selected>Select bank</option>
+              <option disabled selected>Select Bill</option>
               <option>Electricity Bill</option>
               <option>Gas Bill</option>
               <option>Water Bill</option>
@@ -361,7 +368,19 @@
         </form>
       </div>
 
-      <!-- Tr -->
+      <!-- Transactions -->
+      <div class="form" id="transactions-parent">
+        <div class="flex justify-between items-center">
+          <h1 class="font-semibold text-[18px] mt-[20px] mb-[16px]">
+            Transactions
+          </h1>
+
+          <p class="text-[16px] text-[#08080880]">View All</p>
+        </div>
+        <div id="transaction-container"></div>
+
+        <!--  -->
+      </div>
     </div>
 
     <script src="home.js"></script>
